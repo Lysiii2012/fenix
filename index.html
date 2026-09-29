@@ -2,10 +2,15 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Бюро перекладів Фенікс — професійний переклад без кордонів</title>
-  <meta name="description" content="Бюро перекладів Фенікс: письмові та усні переклади, локалізація, нотаріальне засвідчення, апостиль. Понад 40 мов.">
+  <meta name="description" content="Бюро перекладів Фенікс: письмові та усні переклади, локалізація, нотаріальне засвідчення, апостиль. Понад 40 мов. Онлайн-розрахунок вартості.">
+  <meta name="theme-color" content="#050c1c">
   <link rel="icon" href="assets/img/logo_icon.png">
+  <!-- Тема застосовується до відмалювання сторінки, щоб не було «блимання» -->
+  <script>
+    try { if (localStorage.getItem("fenix-theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,6 +33,7 @@
       <ul class="nav__list">
         <li><a href="#home" class="nav__link is-active" data-i18n="navHome">Головна</a></li>
         <li><a href="#services" class="nav__link" data-i18n="navServices">Послуги</a></li>
+        <li><a href="#prices" class="nav__link" data-i18n="navPrices">Ціни</a></li>
         <li><a href="#languages" class="nav__link" data-i18n="navLanguages">Мови</a></li>
         <li><a href="#about" class="nav__link" data-i18n="navAbout">Про нас</a></li>
         <li><a href="#reviews" class="nav__link" data-i18n="navReviews">Відгуки</a></li>
@@ -60,6 +66,11 @@
       <button class="btn btn--gold btn--sm header__cta" data-open-modal type="button">
         <span data-i18n="ctaRequest">Залишити заявку</span>
         <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Увімкнути світлу тему">
+        <svg class="i theme-toggle__sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i theme-toggle__moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
       </button>
 
       <div class="lang" id="lang">
@@ -100,7 +111,7 @@
             <span data-i18n="heroOrder">Замовити переклад</span>
             <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <a href="#services" class="btn btn--outline btn--lg" data-i18n="heroMore">Дізнатись більше</a>
+          <a href="#prices" class="btn btn--outline btn--lg" data-i18n="heroCalc">Розрахувати вартість</a>
         </div>
       </div>
     </div>
@@ -284,6 +295,104 @@
     </div>
   </section>
 
+  <!-- ================= CALCULATOR ================= -->
+  <section class="section calc" id="prices">
+    <div class="container">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow" data-i18n="calcEyebrow">Вартість</p>
+          <h2 class="section__title" data-i18n="calcTitle">Розрахуйте вартість онлайн</h2>
+        </div>
+        <p class="section__lead" data-i18n="calcLead">Оберіть параметри — і побачите орієнтовну ціну та термін. Точну суму менеджер підтвердить безкоштовно.</p>
+      </div>
+
+      <div class="calc__box reveal">
+        <form class="calc__form" id="calcForm" onsubmit="return false">
+          <div class="calc__row">
+            <div class="field">
+              <label for="cType" data-i18n="cType">Тип тексту</label>
+              <select id="cType">
+                <option value="Загальний / документи" data-k="1" data-i18n="cT1">Загальний / документи</option>
+                <option value="Юридичний" data-k="1.25" data-i18n="cT2">Юридичний</option>
+                <option value="Технічний" data-k="1.3" data-i18n="cT3">Технічний</option>
+                <option value="Медичний" data-k="1.3" data-i18n="cT4">Медичний</option>
+                <option value="Маркетинг / локалізація" data-k="1.2" data-i18n="cT5">Маркетинг / локалізація</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cLang" data-i18n="cLang">Мова перекладу</label>
+              <select id="cLang">
+                <option value="Англійська" data-rate="250" data-i18n="lEn">Англійська</option>
+                <option value="Німецька" data-rate="280" data-i18n="lDe">Німецька</option>
+                <option value="Польська" data-rate="250" data-i18n="lPl">Польська</option>
+                <option value="Французька" data-rate="300" data-i18n="lFr">Французька</option>
+                <option value="Іспанська" data-rate="300" data-i18n="lEs">Іспанська</option>
+                <option value="Італійська" data-rate="300" data-i18n="lIt">Італійська</option>
+                <option value="Чеська" data-rate="350" data-i18n="lCs">Чеська</option>
+                <option value="Португальська" data-rate="350" data-i18n="lPt">Португальська</option>
+                <option value="Турецька" data-rate="380" data-i18n="lTr">Турецька</option>
+                <option value="Китайська" data-rate="480" data-i18n="lZh">Китайська</option>
+                <option value="Японська" data-rate="520" data-i18n="lJa">Японська</option>
+                <option value="Арабська" data-rate="480" data-i18n="lAr">Арабська</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="calc__label-row">
+              <label for="cPages" data-i18n="cPages">Обсяг, сторінок</label>
+              <span class="calc__pages"><output id="cPagesOut">3</output></span>
+            </div>
+            <input type="range" id="cPages" min="1" max="100" value="3" class="range">
+            <span class="calc__hint" data-i18n="cHint">1 сторінка = 1800 знаків з пробілами або 1 стандартний документ (паспорт, свідоцтво)</span>
+          </div>
+
+          <fieldset class="field">
+            <legend data-i18n="cSpeed">Терміновість</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="speed" value="1" checked><span data-i18n="cS1">Стандарт</span></label>
+              <label class="chip"><input type="radio" name="speed" value="1.5"><span data-i18n="cS2">Експрес ×1.5</span></label>
+              <label class="chip"><input type="radio" name="speed" value="2"><span data-i18n="cS3">За 24 год ×2</span></label>
+            </div>
+          </fieldset>
+
+          <div class="calc__extras">
+            <label class="toggle">
+              <input type="checkbox" id="cNotary">
+              <span class="toggle__ui"></span>
+              <span><b data-i18n="cNotary">Нотаріальне засвідчення</b> <small data-i18n="cNotaryP">+250 грн / документ</small></span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="cApostille">
+              <span class="toggle__ui"></span>
+              <span><b data-i18n="cApostille">Апостиль</b> <small data-i18n="cApostilleP">+1200 грн</small></span>
+            </label>
+          </div>
+        </form>
+
+        <aside class="calc__result" aria-live="polite">
+          <p class="calc__result-label" data-i18n="cTotal">Орієнтовна вартість</p>
+          <p class="calc__price"><span data-i18n="cFrom">від</span> <b id="cPrice">750</b> <span data-i18n="cUah">грн</span></p>
+          <ul class="calc__meta">
+            <li>
+              <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <span><span data-i18n="cTerm">Термін:</span> <b id="cDays">1–2 дні</b></span>
+            </li>
+            <li>
+              <svg class="i" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+              <span><span data-i18n="cPerPage">За сторінку:</span> <b id="cRate">250 грн</b></span>
+            </li>
+          </ul>
+          <button class="btn btn--gold btn--lg calc__btn" type="button" id="calcOrder">
+            <span data-i18n="cOrder">Замовити за цією ціною</span>
+            <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="calc__note" data-i18n="cNote">Розрахунок попередній. Остаточну ціну назве менеджер після перегляду документів.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= LANGUAGES ================= -->
   <section class="section languages" id="languages">
     <div class="container">
@@ -346,7 +455,7 @@
           <span data-i18n="lSv">Шведська</span>
         </li>
         <li class="langs__item langs__item--extra">
-          <svg class="flag" viewBox="0 0 30 30"><rect width="30" height="30" fill="#fff"/><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#fff"/><rect y="0" width="30" height="10" fill="#AE1C28"/><rect y="20" width="30" height="10" fill="#21468B"/></svg>
+          <svg class="flag" viewBox="0 0 30 30"><rect width="30" height="10" fill="#AE1C28"/><rect y="10" width="30" height="10" fill="#fff"/><rect y="20" width="30" height="10" fill="#21468B"/></svg>
           <span data-i18n="lNl">Нідерландська</span>
         </li>
         <li class="langs__item langs__item--extra">
@@ -354,11 +463,11 @@
           <span data-i18n="lEl">Грецька</span>
         </li>
         <li class="langs__item langs__item--extra">
-          <svg class="flag" viewBox="0 0 30 30"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#D7141A"/><rect y="20" width="30" height="10" fill="#D7141A"/><rect y="10" width="30" height="20" fill="#D7141A"/><rect y="0" width="30" height="15" fill="#fff"/><path d="M0 0l15 15L0 30z" fill="#11457E"/></svg>
+          <svg class="flag" viewBox="0 0 30 30"><rect width="30" height="15" fill="#fff"/><rect y="15" width="30" height="15" fill="#D7141A"/><path d="M0 0l15 15L0 30z" fill="#11457E"/></svg>
           <span data-i18n="lCs">Чеська</span>
         </li>
         <li class="langs__item langs__item--extra">
-          <svg class="flag" viewBox="0 0 30 30"><rect width="30" height="10" fill="#006C35"/><rect width="30" height="30" fill="#006C35"/><path d="M8 17h14" stroke="#fff" stroke-width="1.5"/><path d="M9 12h12" stroke="#fff" stroke-width="2" stroke-dasharray="1.5 1"/></svg>
+          <svg class="flag" viewBox="0 0 30 30"><rect width="30" height="30" fill="#006C35"/><path d="M8 17h14" stroke="#fff" stroke-width="1.5"/><path d="M9 12h12" stroke="#fff" stroke-width="2" stroke-dasharray="1.5 1"/></svg>
           <span data-i18n="lAr">Арабська</span>
         </li>
         <li class="langs__item langs__item--extra">
@@ -398,6 +507,7 @@
         <article class="review">
           <span class="review__avatar">ОК</span>
           <div>
+            <div class="review__stars" aria-label="5 з 5">★★★★★</div>
             <p class="review__text" data-i18n="r1">«Швидко, якісно, професійно! Дуже задоволена співпрацею, рекомендую!»</p>
             <p class="review__name">Олена К.</p>
             <p class="review__role" data-i18n="clientF">Клієнтка</p>
@@ -406,6 +516,7 @@
         <article class="review">
           <span class="review__avatar">ДП</span>
           <div>
+            <div class="review__stars" aria-label="5 з 5">★★★★★</div>
             <p class="review__text" data-i18n="r2">«Переклад документів виконали вчасно, все чітко і без помилок. Дуже вдячні команді Фенікс!»</p>
             <p class="review__name">Дмитро П.</p>
             <p class="review__role" data-i18n="clientM">Клієнт</p>
@@ -414,6 +525,7 @@
         <article class="review">
           <span class="review__avatar">МС</span>
           <div>
+            <div class="review__stars" aria-label="5 з 5">★★★★★</div>
             <p class="review__text" data-i18n="r3">«Професіонали своєї справи! Особливо сподобалась комунікація та швидкість виконання.»</p>
             <p class="review__name">Марія С.</p>
             <p class="review__role" data-i18n="clientF">Клієнтка</p>
@@ -422,6 +534,7 @@
         <article class="review">
           <span class="review__avatar">АБ</span>
           <div>
+            <div class="review__stars" aria-label="5 з 5">★★★★★</div>
             <p class="review__text" data-i18n="r4">«Замовляв апостиль і нотаріальний переклад диплома — усе зробили за два дні. Дякую!»</p>
             <p class="review__name">Андрій Б.</p>
             <p class="review__role" data-i18n="clientM">Клієнт</p>
@@ -430,6 +543,7 @@
         <article class="review">
           <span class="review__avatar">ІЛ</span>
           <div>
+            <div class="review__stars" aria-label="5 з 5">★★★★★</div>
             <p class="review__text" data-i18n="r5">«Локалізували наш сайт на три мови. Уважні до деталей, тримали в курсі на кожному етапі.»</p>
             <p class="review__name">Ірина Л.</p>
             <p class="review__role" data-i18n="clientF">Клієнтка</p>
@@ -440,8 +554,49 @@
     </div>
   </section>
 
+  <!-- ================= FAQ ================= -->
+  <section class="section faq" id="faq">
+    <div class="container faq__inner">
+      <div class="faq__intro">
+        <p class="eyebrow" data-i18n="faqEyebrow">Питання та відповіді</p>
+        <h2 class="section__title" data-i18n="faqTitle">Часті запитання</h2>
+        <p class="section__lead" data-i18n="faqLead">Не знайшли відповідь? Напишіть нам — відповімо протягом 15 хвилин.</p>
+        <button class="btn btn--outline" type="button" data-open-modal>
+          <span data-i18n="faqAsk">Поставити запитання</span>
+          <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="faq__list">
+        <details class="faq__item" open>
+          <summary data-i18n="q1">Скільки коштує переклад?</summary>
+          <p data-i18n="a1">Вартість залежить від мови, обсягу та тематики тексту. Базова ціна — від 250 грн за сторінку (1800 знаків). Скористайтеся калькулятором вище або надішліть документ — оцінимо безкоштовно.</p>
+        </details>
+        <details class="faq__item">
+          <summary data-i18n="q2">Як швидко буде готовий переклад?</summary>
+          <p data-i18n="a2">У стандартному режимі перекладаємо 5–8 сторінок на день. Для термінових замовлень є експрес-режим та переклад за 24 години.</p>
+        </details>
+        <details class="faq__item">
+          <summary data-i18n="q3">Чи можна замовити переклад онлайн?</summary>
+          <p data-i18n="a3">Так. Надішліть фото або скан документа через форму на сайті, Telegram чи email. Готовий переклад отримаєте електронною поштою або Новою поштою.</p>
+        </details>
+        <details class="faq__item">
+          <summary data-i18n="q4">Ви робите нотаріальне засвідчення?</summary>
+          <p data-i18n="a4">Так, ми співпрацюємо з нотаріусами та засвідчуємо переклади в той самий або наступний день. Для засвідчення потрібен оригінал або нотаріальна копія документа.</p>
+        </details>
+        <details class="faq__item">
+          <summary data-i18n="q5">Що потрібно для апостиля?</summary>
+          <p data-i18n="a5">Оригінал документа та копія паспорта. Ми підкажемо, чи потрібен апостиль саме у вашій країні, і візьмемо на себе всю подачу.</p>
+        </details>
+        <details class="faq__item">
+          <summary data-i18n="q6">Чи конфіденційні мої документи?</summary>
+          <p data-i18n="a6">Так. Усі перекладачі підписують угоду про нерозголошення, а файли зберігаються лише на час виконання замовлення. За потреби підпишемо NDA з вашою компанією.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= CTA / CONTACTS ================= -->
-  <section class="cta" id="contacts">
+  <section class="cta on-dark" id="contacts">
     <div class="container cta__inner">
       <div class="cta__text reveal">
         <h2 class="cta__title" data-i18n="ctaTitle">Готові замовити переклад?</h2>
@@ -475,7 +630,7 @@
 </main>
 
 <!-- ================= FOOTER ================= -->
-<footer class="footer">
+<footer class="footer on-dark">
   <div class="container footer__inner">
     <p>© <span id="year">2025</span> <span data-i18n="copyright">Бюро перекладів Фенікс. Всі права захищені.</span></p>
     <ul class="socials">
@@ -498,67 +653,114 @@
       <h2 class="form__title" id="modalTitle" data-i18n="formTitle">Залишити заявку</h2>
       <p class="form__sub" data-i18n="formSub">Заповніть форму — ми зв'яжемося з вами протягом 15 хвилин.</p>
 
-      <div class="field">
-        <label for="fName" data-i18n="fName">Ім'я *</label>
-        <input id="fName" name="name" type="text" autocomplete="name" required minlength="2">
-        <span class="field__error" data-i18n="errName">Вкажіть ваше ім'я</span>
+      <div class="calc-summary" id="calcSummary" hidden>
+        <svg class="i" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h8"/></svg>
+        <span id="calcSummaryText"></span>
+        <button type="button" class="calc-summary__x" id="calcSummaryClear" aria-label="Прибрати розрахунок">×</button>
       </div>
-      <div class="field">
-        <label for="fPhone" data-i18n="fPhone">Телефон *</label>
-        <input id="fPhone" name="phone" type="tel" autocomplete="tel" placeholder="+38 (0__) ___ __ __" required>
-        <span class="field__error" data-i18n="errPhone">Вкажіть коректний номер телефону</span>
+
+      <!-- Пастка для спам-ботів: люди це поле не бачать -->
+      <div class="hp" aria-hidden="true">
+        <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       </div>
-      <div class="field">
-        <label for="fEmail">Email</label>
-        <input id="fEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com">
-        <span class="field__error" data-i18n="errEmail">Некоректний email</span>
+
+      <div class="form__row">
+        <div class="field">
+          <label for="fName" data-i18n="fName">Ім'я *</label>
+          <input id="fName" name="name" type="text" autocomplete="name" maxlength="80" required>
+          <span class="field__error" data-i18n="errName">Вкажіть ваше ім'я</span>
+        </div>
+        <div class="field">
+          <label for="fPhone" data-i18n="fPhone">Телефон *</label>
+          <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___ __ __" maxlength="22" required>
+          <span class="field__error" data-i18n="errPhone">Вкажіть коректний номер телефону</span>
+        </div>
       </div>
+
+      <fieldset class="field">
+        <legend data-i18n="fContact">Як з вами зв'язатися?</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="contact" value="Дзвінок" checked><span data-i18n="fcCall">Дзвінок</span></label>
+          <label class="chip"><input type="radio" name="contact" value="Telegram"><span>Telegram</span></label>
+          <label class="chip"><input type="radio" name="contact" value="Viber"><span>Viber</span></label>
+          <label class="chip"><input type="radio" name="contact" value="WhatsApp"><span>WhatsApp</span></label>
+          <label class="chip"><input type="radio" name="contact" value="Email"><span>Email</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="fEmail"><span>Email</span> <span class="field__req" id="emailReq" hidden>*</span></label>
+        <input id="fEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" maxlength="120">
+        <span class="field__error" data-i18n="errEmail">Вкажіть коректний email</span>
+      </div>
+
       <div class="form__row">
         <div class="field">
           <label for="fService" data-i18n="fService">Послуга</label>
           <select id="fService" name="service">
-            <option>Письмові переклади</option>
-            <option>Усні переклади</option>
-            <option>Локалізація</option>
-            <option>Нотаріальне засвідчення</option>
-            <option>Апостиль</option>
-            <option>Технічний переклад</option>
-            <option>Медичний переклад</option>
-            <option>Юридичний переклад</option>
-            <option>Терміновий переклад</option>
-            <option>Редагування</option>
+            <option value="Письмові переклади" data-i18n="s1t">Письмові переклади</option>
+            <option value="Усні переклади" data-i18n="s2t">Усні переклади</option>
+            <option value="Локалізація" data-i18n="s3t">Локалізація</option>
+            <option value="Нотаріальне засвідчення" data-i18n="s4t">Нотаріальне засвідчення</option>
+            <option value="Апостиль" data-i18n="s5t">Апостиль</option>
+            <option value="Технічний переклад" data-i18n="s6t">Технічний переклад</option>
+            <option value="Медичний переклад" data-i18n="s7t">Медичний переклад</option>
+            <option value="Юридичний переклад" data-i18n="s8t">Юридичний переклад</option>
+            <option value="Терміновий переклад" data-i18n="s9t">Терміновий переклад</option>
+            <option value="Редагування" data-i18n="s10t">Редагування</option>
           </select>
         </div>
         <div class="field">
           <label for="fLang" data-i18n="fLang">Мова</label>
           <select id="fLang" name="language">
-            <option>Англійська</option><option>Німецька</option><option>Французька</option>
-            <option>Іспанська</option><option>Італійська</option><option>Польська</option>
-            <option>Китайська</option><option>Японська</option><option>Турецька</option>
-            <option>Інша</option>
+            <option value="Англійська" data-i18n="lEn">Англійська</option>
+            <option value="Німецька" data-i18n="lDe">Німецька</option>
+            <option value="Польська" data-i18n="lPl">Польська</option>
+            <option value="Французька" data-i18n="lFr">Французька</option>
+            <option value="Іспанська" data-i18n="lEs">Іспанська</option>
+            <option value="Італійська" data-i18n="lIt">Італійська</option>
+            <option value="Чеська" data-i18n="lCs">Чеська</option>
+            <option value="Португальська" data-i18n="lPt">Португальська</option>
+            <option value="Турецька" data-i18n="lTr">Турецька</option>
+            <option value="Китайська" data-i18n="lZh">Китайська</option>
+            <option value="Японська" data-i18n="lJa">Японська</option>
+            <option value="Арабська" data-i18n="lAr">Арабська</option>
+            <option value="Інша" data-i18n="lOther">Інша</option>
           </select>
         </div>
       </div>
+
       <div class="field">
-        <label for="fFile" data-i18n="fFile">Файл для оцінки (необов'язково)</label>
-        <label class="file" for="fFile">
+        <span class="field__label" data-i18n="fFile">Файли для оцінки (необов'язково)</span>
+        <label class="file" id="fileDrop" for="fFile">
           <svg class="i" viewBox="0 0 24 24"><path d="M21 12.5l-8.5 8.5a5 5 0 0 1-7-7L14 5.5a3.3 3.3 0 0 1 4.7 4.7L10.2 18.7a1.7 1.7 0 0 1-2.4-2.4L15.5 8.6"/></svg>
-          <span class="file__name" data-i18n="fFileBtn">Прикріпити документ</span>
+          <span class="file__text">
+            <span data-i18n="fFileBtn">Прикріпіть або перетягніть документи</span>
+            <small data-i18n="fFileHint">PDF, DOC, JPG, PNG… до 5 файлів, до 10 МБ кожен</small>
+          </span>
         </label>
-        <input id="fFile" name="file" type="file" class="visually-hidden" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.xls,.xlsx">
+        <input id="fFile" name="files[]" type="file" class="visually-hidden" multiple
+               accept=".pdf,.doc,.docx,.txt,.rtf,.odt,.jpg,.jpeg,.png,.heic,.xls,.xlsx,.ppt,.pptx,.zip">
+        <ul class="file-list" id="fileList"></ul>
+        <span class="field__error" id="fileError"></span>
       </div>
+
       <div class="field">
         <label for="fMsg" data-i18n="fMsg">Коментар</label>
-        <textarea id="fMsg" name="message" rows="3"></textarea>
+        <textarea id="fMsg" name="message" rows="3" maxlength="2000" data-i18n-ph="fMsgPh" placeholder="Наприклад: переклад паспорта на польську з нотаріальним засвідченням"></textarea>
       </div>
-      <label class="check">
-        <input type="checkbox" name="agree" required checked>
+
+      <label class="check" id="agreeBox">
+        <input type="checkbox" name="agree" checked>
         <span data-i18n="fAgree">Погоджуюсь на обробку персональних даних</span>
       </label>
+
       <button type="submit" class="btn btn--gold btn--lg form__submit">
-        <span data-i18n="fSubmit">Надіслати заявку</span>
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="form__submit-text" data-i18n="fSubmit">Надіслати заявку</span>
         <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
+      <p class="form__error" id="formError" role="alert" hidden></p>
     </form>
 
     <div class="success" id="formSuccess" hidden>
