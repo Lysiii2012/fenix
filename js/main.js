@@ -9,7 +9,7 @@ const CONFIG = {
   // true  — демо-режим: заявка нікуди не надсилається, лише показується «Дякуємо»
   // false — робочий режим: заявки йдуть у Telegram.
   // ⚠️ Коли вставите токен бота в send.php — поставте тут false
-  demo: true,
+  demo: false,
   maxFiles: 5,
   maxFileMb: 10,
   // Ціни калькулятора (грн). Ціна перекладу документа — з Google-таблиці (запасні — data-rate у index.html)
@@ -842,8 +842,8 @@ function showFormError() {
   formError.innerHTML = "";
   formError.append(t("errNet"));
   const a = document.createElement("a");
-  a.href = "tel:+380991234567";
-  a.textContent = "+38 (099) 123 45 67";
+  a.href = "tel:+380988491324";
+  a.textContent = "+38 (098) 849 13 24";
   formError.append(a);
   formError.hidden = false;
 }
