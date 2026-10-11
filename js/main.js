@@ -123,7 +123,7 @@ const I18N = {
     errName: "Please enter your name", errPhone: "Please enter a valid phone number", errEmail: "Please enter a valid email",
     errFileSize: "File “{name}” is larger than {mb} MB", errFileCount: "You can attach up to {n} files",
     errNet: "Couldn't send the request. Check your connection and try again, or call us: ",
-    okTitle: "Thank you!", okText: "Your request has been received. Our manager will contact you shortly.", okClose: "Close",
+    okTitle: "Thank you!", okText: "We have received your request and will contact you shortly to confirm the order or clarify the details.", okClose: "Close",
     themeLight: "Switch to light theme", themeDark: "Switch to dark theme",
     csTitle: "Your estimate", csLangs: "Languages", csYes: "yes",
   },
@@ -898,8 +898,11 @@ form.addEventListener("submit", async e => {
       const timer = setTimeout(() => ctrl.abort(), 30000);
       const res = await fetch(CONFIG.endpoint, { method: "POST", body: fd, headers: { Accept: "application/json" }, signal: ctrl.signal });
       clearTimeout(timer);
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) throw new Error(data.error || res.status);
+      // Деякі хостинги дописують до відповіді свій код — шукаємо в ній {"ok":true}
+      const text = await res.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch (e) { data = { ok: /"ok"\s*:\s*true/.test(text) }; }
+      if (!res.ok || !data.ok) throw new Error(data.error || `${res.status}: ${text.slice(0, 200)}`);
     }
     form.reset();
     files = []; renderFiles(); setFileError("");

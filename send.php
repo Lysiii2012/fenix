@@ -15,12 +15,20 @@ const MAX_FILES   = 5;
 const MAX_FILE_MB = 10;
 const RATE_LIMIT_SECONDS = 20;              // не частіше однієї заявки з IP
 const ALLOWED_EXT = ['pdf','doc','docx','txt','rtf','odt','jpg','jpeg','png','heic','xls','xlsx','ppt','pptx','zip'];
+const TIMEZONE    = 'Europe/Kyiv';         // час у заявках
 // ==========================================================
+
+// Попередження PHP не повинні потрапляти у відповідь — інакше сайт не розбере JSON
+ini_set('display_errors', '0');
+// На старих серверах Київ ще записаний як Europe/Kiev
+if (!@date_default_timezone_set(TIMEZONE)) @date_default_timezone_set('Europe/Kiev');
+ob_start();
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
 function respond(int $code, array $data): void {
+    while (ob_get_level()) ob_end_clean();
     http_response_code($code);
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
     exit;
@@ -47,7 +55,6 @@ function tg(string $method, array $params): array {
     ]);
     $body = curl_exec($ch);
     $err  = curl_error($ch);
-    curl_close($ch);
     if ($body === false) return ['ok' => false, 'description' => $err];
     $json = json_decode($body, true);
     return is_array($json) ? $json : ['ok' => false, 'description' => 'bad response'];
