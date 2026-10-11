@@ -121,7 +121,7 @@ $lines = [
 if ($email !== '')   $lines[] = '✉️ <b>Email:</b> ' . esc($email);
 if ($contact !== '') $lines[] = '💬 <b>Зв\'язок:</b> ' . esc($contact);
 $lines[] = '';
-if ($service !== '')  $lines[] = '📄 <b>Послуга:</b> ' . esc($service);
+if ($service !== '')  $lines[] = '📄 <b>Документ:</b> ' . esc($service);
 if ($language !== '') $lines[] = '🌍 <b>Мова:</b> ' . esc($language);
 if ($calc !== '')     $lines[] = '🧮 <b>Калькулятор:</b> ' . esc($calc);
 if ($message !== '')  $lines[] = "\n📝 <b>Коментар:</b>\n" . esc($message);
