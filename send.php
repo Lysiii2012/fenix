@@ -9,8 +9,8 @@
  */
 
 // ====================== НАЛАШТУВАННЯ ======================
-const BOT_TOKEN   = '8884703436:AAH7upk6z1P962C4-MRZ1hfkXBxVAV6xbBQ';   // напр. 7123456789:AAH...
-const CHAT_ID     = '8842619415';      // напр. 123456789 або -1001234567890 для групи
+const BOT_TOKEN   = '00000000:AAH7upk6z1P962C4Q'; 
+const CHAT_ID     = '0000000000';   
 const MAX_FILES   = 5;
 const MAX_FILE_MB = 10;
 const RATE_LIMIT_SECONDS = 20;              // не частіше однієї заявки з IP
